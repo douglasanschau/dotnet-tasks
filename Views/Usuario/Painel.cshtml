@@ -1,0 +1,85 @@
+@model List<TarefaModel>
+
+<link rel="stylesheet" href="/css/painel.css" asp-append-version="true"  />
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+        <h2>Tarefas .NET</h2>
+
+        <nav>
+            <a asp-controller="Usuario" asp-action="Painel">
+              📋 Minhas Tarefas
+            </a>
+
+            <a asp-controller="Usuario" asp-action="Perfil">
+                👤 Perfil
+            </a>
+
+            <a asp-controller="Usuario" asp-action="Logout">
+                🚪 Sair
+            </a>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <div class="header">
+            <h1>Minhas Tarefas</h1>
+
+            @if (Model != null && Model.Any()){
+                <a href="/web/tarefa" class="btn-primary">
+                    + Nova Tarefa
+                </a>
+            }
+        </div>
+
+        <div class="tasks">
+
+
+            @if (Model != null && Model.Any()){
+                foreach(var tarefa in Model){
+                     <div class="task-card">
+                        <h3>@tarefa.Titulo</h3>
+
+                        <p>
+                            @tarefa.Descricao
+                        </p>
+
+                        <div class="task-actions">
+                            <a href="/web/tarefa/@tarefa.Id" class="btn-edit">
+                                Editar
+                            </a>
+
+                            <form method="post" asp-controller="Usuario" asp-action="ExcluirTarefa"  asp-route-tarefaId="@tarefa.Id">
+                                <button type='submit' class="btn-delete">
+                                    Excluir
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                }
+                
+            } else {
+              <div class="empty-state">
+                <div class="empty-icon">
+                    📋
+                </div>
+
+                <h3>Nenhuma tarefa encontrada</h3>
+
+                <p>
+                    Você ainda não cadastrou nenhuma tarefa.
+                </p>
+
+                <a href="/web/tarefa" class="btn-primary">
+                    Criar primeira tarefa
+                </a>
+              </div>
+            }
+            
+        </div>
+
+    </main>
+
+</div>

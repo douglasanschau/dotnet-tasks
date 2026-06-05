@@ -1,0 +1,81 @@
+@model  TarefaModel 
+
+<link rel="stylesheet" href="/css/painel.css" asp-append-version="true"  />
+<link rel="stylesheet" href="/css/tarefa.css" asp-append-version="true"  />
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+        <h2>Tarefas .NET</h2>
+
+        <nav>
+            <a asp-controller="Usuario" asp-action="Painel">
+              📋 Minhas Tarefas
+            </a>
+
+            <a asp-controller="Usuario" asp-action="Perfil">
+                👤 Perfil
+            </a>
+
+            <a asp-controller="Usuario" asp-action="Logout">
+                🚪 Sair
+            </a>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <div class="page-grid">
+
+            <div class="form-card">
+
+                <div class="form-header">
+                    <h1>
+                        @(Model?.Id > 0 ? "Editar Tarefa" : "Nova Tarefa")
+                    </h1>
+                    <p>Organize suas atividades.</p>
+                </div>
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <form method="post" asp-controller="Usuario" asp-action="SalvarTarefa">
+                    <input type='hidden' asp-for="Id" value="@(Model?.Id > 0 ? Model?.Id : 0)" /> 
+                    <div class="form-group">
+                        <label>Título</label>
+                        <input type="text" asp-for="Titulo">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea asp-for="Descricao"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            Salvar
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="tips-box">
+
+                <h3>Dicas</h3>
+
+                <ul>
+                    <li>Use títulos objetivos.</li>
+                    <li>Descreva o que precisa ser feito.</li>
+                    <li>Evite tarefas muito genéricas.</li>
+                    <li>Atualize suas tarefas regularmente.</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
